@@ -1,2 +1,5 @@
 # 3W-Anomaly
-Utilizing machine learning to detect anomalies in offshore oil wells: Marco Tortolani
+
+Members: Marco Tortolani
+
+This project was designed to build off of the work provided by Vagas, Munaro, Ciarelli, Nedeuros, Amaral, Barrionuevo, Araujo, Ribeiro, Magalhaes in their paper A Realistic and Public Dataset with Rare and Undesirable Events in Oil Wells. The significance of this paper cannot be understated, as it is a detailed report and dataset on offshore oil well failures derived from analyzing 3 seperate petrobras oil wells. From this data, I utilized K Nearest Neighbor Clustering with Dynamic Time Warping in order to create a model that can accurately detect and describe oil well failured based off of temperature and temperature data. I'd consider this project one of my first large data science challenges due to the scale of the data and the active process of measuring the efficacacy of different models. I have nothing but gratitude for Maxwell Salvadore and the Northeastern University DATA Club for their continuous support through the development of this analysis.
