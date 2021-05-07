@@ -9,13 +9,16 @@ This project was designed to build off of the work provided by Vagas, Munaro, Ci
 pandas, matplotlib, seaborn, os, statistics, sklearn, tslearn, random, numpy, scipy
 
 ### Notes to run code:
-The functions loop_directory() and batch_dict_maker() assume that the 3W dataset is in the same file path as your working file, as it calls csv files solely from the well error number (0-8)  and measurement type (WELL, SIMULATED, DRAWN). If the functions are unable to find the appropriate files, considering altering how the files are called to directly reference your individual file path.
-In its current state, the model has an exponential complexity in training time, so as you increase the train and test sizes to reflect greater portions of the data, it will eventually take hours/days to trains. As a reference, sample_size=0.001 takes minutes to run, meanwhile sample_size=0.01 takes roughly half a day. knn_report(sample_size=0.001) is written into the code, knn_report(sample_size=0.01) can be found in the included powerpoint presentation.
+1. The dataset consists of nearly 2000 csv files which cannot easily be uploaded to github. Please upload the dataset from Kaggle as made available by user afrânio (Kaggle link in dataset citation). 
+2. The functions loop_directory() and batch_dict_maker() assume that the 3W dataset is in the same file path as your working file, as it calls csv files solely from the well error number (0-8)  and measurement type (WELL, SIMULATED, DRAWN). If the functions are unable to find the appropriate files, considering altering how the files are called to directly reference your individual file path.
+3. In its current state, the model has an exponential complexity in training time, so as you increase the train and test sizes to reflect greater portions of the data, it will eventually take hours/days to trains. As a reference, sample_size=0.001 takes minutes to run, meanwhile sample_size=0.01 takes roughly half a day. knn_report(sample_size=0.001) is written into the code, knn_report(sample_size=0.01) can be found in the included powerpoint presentation.
 
 
 ### Dataset Citation
 Dataset uploaded to Kaggle by afrânio
 Link: https://www.kaggle.com/afrniomelo/3w-dataset
+  
+  
 '''
 @article{VARGAS2019106223,
 title = "A realistic and public dataset with rare undesirable real events in oil wells",
