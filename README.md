@@ -14,6 +14,8 @@ In its current state, the model has an exponential complexity in training time, 
 
 
 ### Dataset Citation
+Dataset uploaded to Kaggle by afrânio
+Link: https://www.kaggle.com/afrniomelo/3w-dataset
 '''
 @article{VARGAS2019106223,
 title = "A realistic and public dataset with rare undesirable real events in oil wells",
