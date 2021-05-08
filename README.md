@@ -1,4 +1,4 @@
-# 3W-Anomaly
+# Detecting Anomalies in Offshore Oil Wells
 
 Members: Marco Tortolani
 
