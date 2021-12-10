@@ -39,9 +39,10 @@ def main():
     
     # Creates a classification report searborn heatmap for KNN clustering with k=3 and 845 samples.
     # change sample_size and k inputs to your disgretion
+    
     report = Creator.create_knn_model(sample_size=0.001, k=3)
     
-    # Graph the report into a heatmap
+    # Plot the report into a heatmap
     fig, ax = plt.subplots()
     fig.set_size_inches(11.7, 8.27)
     sns.color_palette("vlag", as_cmap=True)
@@ -49,11 +50,14 @@ def main():
     plt.title("KNN Clustering (n=3)\nSample size: 845\n", {'fontsize':15, 'fontweight':"bold"})
     plt.show()
     
+    # How many k values do you want to compare the performance of (ie. runs=5 -> k=1,3,5,7,9)
+    runs = 10
+    # What portion of the entire dataset do you want to feed into model (note: time to run grows exponentially with data inputed)
+    sample_size=0.001
+    scores = Creator.knn_f1_score(sample_size, runs)
+    k_values = [1 + 2*i for i in range(runs)]
     
-    scores = Creator.knn_f1_score(sample_size=0.001, runs=10)
-    k_values = [1 + 2*i for i in range(25)]
-    
-    # plot k vs f1 scores into a bar graph
+    # Plot k vs f1 scores into a bar graph
     sns.set_theme(style="whitegrid")
     ax = sns.barplot(x=k_values, y=scores)
     ax.set(xlabel="K Neighbors Considered", ylabel = "F1 Score")
