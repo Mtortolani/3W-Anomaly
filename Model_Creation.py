@@ -1,23 +1,10 @@
 #import relevant modules
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import os
-from statistics import mode
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import f1_score
-import tslearn
-from tslearn.metrics import dtw
-from tslearn.utils import to_time_series
-from tslearn.utils import to_time_series_dataset
-from tslearn.neighbors import KNeighborsTimeSeries
 from tslearn.neighbors import KNeighborsTimeSeriesClassifier
-from random import sample
-import numpy as np
-from scipy import stats
- 
-from Data_Processing import DataProcessor
+
  
  
  
@@ -45,7 +32,7 @@ class ModelCreator():
  
  
  
-    def create_knn_model(self, sample_size=0.001,k=1):
+    def create_knn_model(self, sample_size=0.001,k=3):
         '''
         Run KNN classifier on data
        
@@ -65,7 +52,9 @@ class ModelCreator():
         #knn model creation and fitting
         model = KNeighborsTimeSeriesClassifier(n_neighbors = k, metric="dtw")
         model.fit(X_train, y_train)
+        print('Model Fitting Complete')
         predicted = model.predict(X_test)
+        print('Model Predictions Complete')
         expected = y_test
  
         # return classification report in dictionary format
@@ -85,7 +74,7 @@ class ModelCreator():
         (list): list of f1 scores returned from models
         '''
  
-        total_data_sample = self.sampler(total_data, sample_size)
+        total_data_sample = self.sampler(self.total_data, sample_size)
        
         #split into training and testing
         X_train, X_test, y_train, y_test = train_test_split(total_data_sample[0], total_data_sample[1], train_size=0.8,random_state=42)
@@ -95,11 +84,13 @@ class ModelCreator():
         for k in range(0, runs):
             model = KNeighborsTimeSeriesClassifier(n_neighbors = (1+2*k), metric="dtw")
             model.fit(X_train, y_train)
+            print('Model Fitting Complete')
             predicted = model.predict(X_test)
             expected = y_test
  
             # find f1 score for each model and append to list
             score = f1_score(expected, predicted, average="weighted")
             f1_list.append(score)
+        print(f1_list)
         return f1_list
 

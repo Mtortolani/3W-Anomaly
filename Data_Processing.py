@@ -1,42 +1,16 @@
 #import relevant modules
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import os
 from statistics import mode
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-from sklearn.metrics import f1_score
-import tslearn
-from tslearn.metrics import dtw
-from tslearn.utils import to_time_series
 from tslearn.utils import to_time_series_dataset
-from tslearn.neighbors import KNeighborsTimeSeries
-from tslearn.neighbors import KNeighborsTimeSeriesClassifier
-from random import sample
-import numpy as np
-from scipy import stats
- 
+
  
  
  
 class DataProcessor():
     def __init__(self):
         self.total_data = ()
-        # This is your directory where DataProcessor should look for data
-        self.data_directory ='3W/' # loop_directory(folder)
-       
-        self.included_error_codes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        # This variable if set to true will turn all error codes (0-8) into binary error codes (0 or 1)
-        self.binary_error_detection = True
-        # This variable encapsulates how many seconds of data you want the model to train/test on each time
-        self.seconds = 60
- 
-        #Once all these variables are set up, you can run DataProcessor.clean_data()
- 
-       
-       
-       
+              
     # purely internal function, does not need to be called
     # all data files downloaded from kaggle are in a folder called '3W', seperated into folders by error number ('0', '1', '2', etc)
     def loop_directory(self, folder: str, error_folder: str, type: str):
@@ -68,7 +42,7 @@ class DataProcessor():
  
  
     # turns list of csv files into dictionary so we can divide data by error code or well type
-    def batch_dict_maker(self, main_data_dir='3W/', included_error_codes = [0,1,2,3,4,5,6,7,8], well_types=['WELL','DRAWN','SIMULATED'], nafill=True):
+    def batch_dict_maker(self, main_data_dir='3W/', included_error_codes = [0,1,2,3,4,5,6,7,8], well_types=['WELL','DRAWN','SIMULATED'],  binary_error=False, nafill=True,):
         '''
         Utilize loop_directory to turn csv files into a nested dictionary of oil sensor data, seperated by error type and well type.
  
@@ -95,7 +69,7 @@ class DataProcessor():
                     # Drop unnecesarry columns
                     df.drop(columns = ["QGL"], inplace = True)
                     # OPTIONAL: decide wether error values are variable of binary
-                    if self.binary_error_detection==True:
+                    if binary_error==True:
                         df["class"]=df["class"].astype(bool).astype(int)
                     # fill in NA's with zeros since tslearn does not accpect NA values
                     if nafill==True:
@@ -136,7 +110,7 @@ class DataProcessor():
                         # Cut out time interval
                         well_portion = well.iloc[seconds*interval : seconds*(interval+1)]
                         # Only get the columns we want (first six non-time columns)
-                        X.append(well_portion.loc[:, x_column_start : x_column_end])
+                        X.append(well_portion.iloc[:, x_column_start : x_column_end])
                         y.append(int(mode(well_portion["class"])))
         X = to_time_series_dataset(X)
         print("time series conversion complete")
@@ -147,9 +121,7 @@ class DataProcessor():
 #total data is main time series dataset, contains entirety of data
 #ensuring that the time series has shape (n_ts number of time series, max_sz length of largest series, d dimensions of series)
 
-Processor = DataProcessor()
-Processor.total_data = total_data_compiler()
-print(Processor.total_data[0].shape)
+
 
 
 
@@ -161,6 +133,4 @@ print(Processor.total_data[0].shape)
 # for time_interval in intervals:
 #     interval_data = total_data_compiler(batch, seconds=time_interval)
 
-
-total_data[0].shape
 
