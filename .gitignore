@@ -139,4 +139,4 @@ cython_debug/
 
 # Entire 3W Project dataset
 # Please download from kaggle, keep off git
-3W
+data/*
